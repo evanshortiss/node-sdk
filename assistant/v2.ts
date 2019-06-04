@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 IBM All Rights Reserved.
+ * Copyright 2019 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
 import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * The IBM Watson&trade; Assistant service combines machine learning, natural language understanding, and integrated dialog tools to create conversation flows between your apps and your users.
+ * The IBM Watson&trade; Assistant service combines machine learning, natural language understanding, and an integrated dialog editor to create conversation flows between your apps and your users.
  */
 
 class AssistantV2 extends BaseService {
@@ -40,7 +39,13 @@ class AssistantV2 extends BaseService {
    * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
    * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
    * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.cloud.ibm.com/identity/token'.
-   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
+   * @param {string} [options.iam_client_id] - client id (username) for request to iam service
+   * @param {string} [options.iam_client_secret] - client secret (password) for request to iam service
+   * @param {string} [options.icp4d_access_token] - icp for data access token provided and managed by user
+   * @param {string} [options.icp4d_url] - icp for data base url - used for authentication
+   * @param {string} [options.authentication_type] - authentication pattern to be used. can be iam, basic, or icp4d
+   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This
+   * option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
@@ -67,9 +72,10 @@ class AssistantV2 extends BaseService {
    * state of the conversation.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistant_id - Unique identifier of the assistant. You can find the assistant ID of an
-   * assistant on the **Assistants** tab of the Watson Assistant tool. For information about creating assistants, see
-   * the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task).
+   * @param {string} params.assistant_id - Unique identifier of the assistant. To find the assistant ID in the Watson
+   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
+   * assistants, see the
+   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task).
    *
    * **Note:** Currently, the v2 API does not support creating assistants.
    * @param {Object} [params.headers] - Custom request headers
@@ -122,9 +128,10 @@ class AssistantV2 extends BaseService {
    * Deletes a session explicitly before it times out.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistant_id - Unique identifier of the assistant. You can find the assistant ID of an
-   * assistant on the **Assistants** tab of the Watson Assistant tool. For information about creating assistants, see
-   * the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task).
+   * @param {string} params.assistant_id - Unique identifier of the assistant. To find the assistant ID in the Watson
+   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
+   * assistants, see the
+   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task).
    *
    * **Note:** Currently, the v2 API does not support creating assistants.
    * @param {string} params.session_id - Unique identifier of the session.
@@ -185,9 +192,10 @@ class AssistantV2 extends BaseService {
    * There is no rate limit for this operation.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistant_id - Unique identifier of the assistant. You can find the assistant ID of an
-   * assistant on the **Assistants** tab of the Watson Assistant tool. For information about creating assistants, see
-   * the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task).
+   * @param {string} params.assistant_id - Unique identifier of the assistant. To find the assistant ID in the Watson
+   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
+   * assistants, see the
+   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task).
    *
    * **Note:** Currently, the v2 API does not support creating assistants.
    * @param {string} params.session_id - Unique identifier of the session.
@@ -265,14 +273,29 @@ namespace AssistantV2 {
     iam_access_token?: string;
     iam_apikey?: string;
     iam_url?: string;
+    iam_client_id?: string;
+    iam_client_secret?: string;
+    icp4d_access_token?: string;
+    icp4d_url?: string;
     username?: string;
     password?: string;
+    token?: string;
+    authentication_type?: string;
+    disable_ssl_verification?: boolean;
     use_unauthenticated?: boolean;
     headers?: object;
   }
 
+  export interface Response<T = any>  {
+    result: T;
+    data: T; // for compatibility
+    status: number;
+    statusText: string;
+    headers: any;
+  }
+
   /** The callback for a service request. */
-  export type Callback<T> = (error: any, body?: T, response?: AxiosResponse<T>) => void;
+  export type Callback<T> = (error: any, body?: T, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
   export interface Empty { }
@@ -283,7 +306,7 @@ namespace AssistantV2 {
 
   /** Parameters for the `createSession` operation. */
   export interface CreateSessionParams {
-    /** Unique identifier of the assistant. You can find the assistant ID of an assistant on the **Assistants** tab of the Watson Assistant tool. For information about creating assistants, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task). **Note:** Currently, the v2 API does not support creating assistants. */
+    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open the assistant settings and click **API Details**. For information about creating assistants, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task). **Note:** Currently, the v2 API does not support creating assistants. */
     assistant_id: string;
     headers?: Object;
     return_response?: boolean;
@@ -291,7 +314,7 @@ namespace AssistantV2 {
 
   /** Parameters for the `deleteSession` operation. */
   export interface DeleteSessionParams {
-    /** Unique identifier of the assistant. You can find the assistant ID of an assistant on the **Assistants** tab of the Watson Assistant tool. For information about creating assistants, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task). **Note:** Currently, the v2 API does not support creating assistants. */
+    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open the assistant settings and click **API Details**. For information about creating assistants, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task). **Note:** Currently, the v2 API does not support creating assistants. */
     assistant_id: string;
     /** Unique identifier of the session. */
     session_id: string;
@@ -301,7 +324,7 @@ namespace AssistantV2 {
 
   /** Parameters for the `message` operation. */
   export interface MessageParams {
-    /** Unique identifier of the assistant. You can find the assistant ID of an assistant on the **Assistants** tab of the Watson Assistant tool. For information about creating assistants, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task). **Note:** Currently, the v2 API does not support creating assistants. */
+    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open the assistant settings and click **API Details**. For information about creating assistants, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task). **Note:** Currently, the v2 API does not support creating assistants. */
     assistant_id: string;
     /** Unique identifier of the session. */
     session_id: string;
@@ -439,17 +462,23 @@ namespace AssistantV2 {
     turn_count?: number;
   }
 
+  /** Contains information specific to a particular skill used by the Assistant. */
+  export interface MessageContextSkill {
+    /** Arbitrary variables that can be read and written by a particular skill. */
+    user_defined?: Object;
+  }
+
   /** Information specific to particular skills used by the Assistant. **Note:** Currently, only a single property named `main skill` is supported. This object contains variables that apply to the dialog skill used by the assistant. */
   export interface MessageContextSkills {
-    /** MessageContextSkills accepts additional properties. */
-    [propName: string]: any;
+    /** MessageContextSkills accepts additional properties of type MessageContextSkill. */
+    [propName: string]: MessageContextSkill;
   }
 
   /** An input object that includes the input text. */
   export interface MessageInput {
     /** The type of user input. Currently, only text input is supported. */
     message_type?: string;
-    /** The text of the user input. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
+    /** The text of the user input. This string cannot contain carriage return, newline, or tab characters. */
     text?: string;
     /** Optional properties that control how the assistant responds. */
     options?: MessageInputOptions;

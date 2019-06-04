@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 IBM All Rights Reserved.
+ * Copyright 2019 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
 import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * The IBM Watson&trade; Assistant service combines machine learning, natural language understanding, and integrated dialog tools to create conversation flows between your apps and your users.
+ * The IBM Watson&trade; Assistant service combines machine learning, natural language understanding, and an integrated dialog editor to create conversation flows between your apps and your users.
  */
 
 class AssistantV1 extends BaseService {
@@ -40,7 +39,13 @@ class AssistantV1 extends BaseService {
    * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
    * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
    * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.cloud.ibm.com/identity/token'.
-   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
+   * @param {string} [options.iam_client_id] - client id (username) for request to iam service
+   * @param {string} [options.iam_client_secret] - client secret (password) for request to iam service
+   * @param {string} [options.icp4d_access_token] - icp for data access token provided and managed by user
+   * @param {string} [options.icp4d_url] - icp for data base url - used for authentication
+   * @param {string} [options.authentication_type] - authentication pattern to be used. can be iam, basic, or icp4d
+   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This
+   * option may be useful for requests that are proxied.
    * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
@@ -156,9 +161,9 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.name] - The name of the workspace. This string cannot contain carriage return, newline, or
-   * tab characters, and it must be no longer than 64 characters.
+   * tab characters.
    * @param {string} [params.description] - The description of the workspace. This string cannot contain carriage
-   * return, newline, or tab characters, and it must be no longer than 128 characters.
+   * return, newline, or tab characters.
    * @param {string} [params.language] - The language of the workspace.
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
    * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace (including artifacts such as
@@ -408,9 +413,9 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} [params.name] - The name of the workspace. This string cannot contain carriage return, newline, or
-   * tab characters, and it must be no longer than 64 characters.
+   * tab characters.
    * @param {string} [params.description] - The description of the workspace. This string cannot contain carriage
-   * return, newline, or tab characters, and it must be no longer than 128 characters.
+   * return, newline, or tab characters.
    * @param {string} [params.language] - The language of the workspace.
    * @param {Object} [params.metadata] - Any metadata related to the workspace.
    * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace (including artifacts such as
@@ -502,6 +507,9 @@ class AssistantV1 extends BaseService {
    *
    * Create a new intent.
    *
+   * If you want to create multiple intents with a single API call, consider using the **[Update
+   * workspace](#update-workspace)** method instead.
+   *
    * This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -509,9 +517,8 @@ class AssistantV1 extends BaseService {
    * @param {string} params.intent - The name of the intent. This string must conform to the following restrictions:
    * - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.
    * - It cannot begin with the reserved prefix `sys-`.
-   * - It must be no longer than 128 characters.
    * @param {string} [params.description] - The description of the intent. This string cannot contain carriage return,
-   * newline, or tab characters, and it must be no longer than 128 characters.
+   * newline, or tab characters.
    * @param {Example[]} [params.examples] - An array of user input examples for the intent.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -767,6 +774,9 @@ class AssistantV1 extends BaseService {
    * Update an existing intent with new or modified data. You must provide component objects defining the content of the
    * updated intent.
    *
+   * If you want to update multiple intents with a single API call, consider using the **[Update
+   * workspace](#update-workspace)** method instead.
+   *
    * This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -776,9 +786,8 @@ class AssistantV1 extends BaseService {
    * restrictions:
    * - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.
    * - It cannot begin with the reserved prefix `sys-`.
-   * - It must be no longer than 128 characters.
    * @param {string} [params.new_description] - The description of the intent. This string cannot contain carriage
-   * return, newline, or tab characters, and it must be no longer than 128 characters.
+   * return, newline, or tab characters.
    * @param {Example[]} [params.new_examples] - An array of user input examples for the intent.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -842,6 +851,9 @@ class AssistantV1 extends BaseService {
    *
    * Add a new user input example to an intent.
    *
+   * If you want to add multiple exaples with a single API call, consider using the **[Update intent](#update-intent)**
+   * method instead.
+   *
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -851,7 +863,6 @@ class AssistantV1 extends BaseService {
    * restrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
-   * - It must be no longer than 1024 characters.
    * @param {Mention[]} [params.mentions] - An array of contextual entity mentions.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1102,6 +1113,9 @@ class AssistantV1 extends BaseService {
    *
    * Update the text of a user input example.
    *
+   * If you want to update multiple examples with a single API call, consider using the **[Update
+   * intent](#update-intent)** method instead.
+   *
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -1112,7 +1126,6 @@ class AssistantV1 extends BaseService {
    * restrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
-   * - It must be no longer than 1024 characters.
    * @param {Mention[]} [params.new_mentions] - An array of contextual entity mentions.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1176,15 +1189,17 @@ class AssistantV1 extends BaseService {
    *
    * Add a new counterexample to a workspace. Counterexamples are examples that have been marked as irrelevant input.
    *
+   * If you want to add multiple counterexamples with a single API call, consider using the **[Update
+   * workspace](#update-workspace)** method instead.
+   *
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input marked as irrelevant input. This string must conform to the
    * following restrictions:
-   * - It cannot contain carriage return, newline, or tab characters
-   * - It cannot consist of only whitespace characters
-   * - It must be no longer than 1024 characters.
+   * - It cannot contain carriage return, newline, or tab characters.
+   * - It cannot consist of only whitespace characters.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -1426,6 +1441,9 @@ class AssistantV1 extends BaseService {
    *
    * Update the text of a counterexample. Counterexamples are examples that have been marked as irrelevant input.
    *
+   * If you want to update multiple counterexamples with a single API call, consider using the **[Update
+   * workspace](#update-workspace)** method instead.
+   *
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -1433,9 +1451,8 @@ class AssistantV1 extends BaseService {
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
    * @param {string} [params.new_text] - The text of a user input marked as irrelevant input. This string must conform
    * to the following restrictions:
-   * - It cannot contain carriage return, newline, or tab characters
-   * - It cannot consist of only whitespace characters
-   * - It must be no longer than 1024 characters.
+   * - It cannot contain carriage return, newline, or tab characters.
+   * - It cannot consist of only whitespace characters.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -1496,18 +1513,19 @@ class AssistantV1 extends BaseService {
    *
    * Create a new entity, or enable a system entity.
    *
+   * If you want to create multiple entities with a single API call, consider using the **[Update
+   * workspace](#update-workspace)** method instead.
+   *
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity. This string must conform to the following restrictions:
    * - It can contain only Unicode alphanumeric, underscore, and hyphen characters.
-   * - It must be no longer than 64 characters.
-   *
-   * If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity
+   * - If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity
    * that you want to enable. (Any entity content specified with the request is ignored.).
    * @param {string} [params.description] - The description of the entity. This string cannot contain carriage return,
-   * newline, or tab characters, and it must be no longer than 128 characters.
+   * newline, or tab characters.
    * @param {Object} [params.metadata] - Any metadata related to the entity.
    * @param {boolean} [params.fuzzy_match] - Whether to use fuzzy matching for the entity.
    * @param {CreateValue[]} [params.values] - An array of objects describing the entity values.
@@ -1767,6 +1785,9 @@ class AssistantV1 extends BaseService {
    * Update an existing entity with new or modified data. You must provide component objects defining the content of the
    * updated entity.
    *
+   * If you want to update multiple entities with a single API call, consider using the **[Update
+   * workspace](#update-workspace)** method instead.
+   *
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -1776,9 +1797,8 @@ class AssistantV1 extends BaseService {
    * restrictions:
    * - It can contain only Unicode alphanumeric, underscore, and hyphen characters.
    * - It cannot begin with the reserved prefix `sys-`.
-   * - It must be no longer than 64 characters.
    * @param {string} [params.new_description] - The description of the entity. This string cannot contain carriage
-   * return, newline, or tab characters, and it must be no longer than 128 characters.
+   * return, newline, or tab characters.
    * @param {Object} [params.new_metadata] - Any metadata related to the entity.
    * @param {boolean} [params.new_fuzzy_match] - Whether to use fuzzy matching for the entity.
    * @param {CreateValue[]} [params.new_values] - An array of objects describing the entity values.
@@ -1917,6 +1937,9 @@ class AssistantV1 extends BaseService {
    *
    * Create a new value for an entity.
    *
+   * If you want to create multiple entity values with a single API call, consider using the **[Update
+   * entity](#update-entity)** method instead.
+   *
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -1926,7 +1949,6 @@ class AssistantV1 extends BaseService {
    * restrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
-   * - It must be no longer than 64 characters.
    * @param {Object} [params.metadata] - Any metadata related to the entity value.
    * @param {string} [params.value_type] - Specifies the type of entity value.
    * @param {string[]} [params.synonyms] - An array of synonyms for the entity value. A value can specify either
@@ -1934,11 +1956,10 @@ class AssistantV1 extends BaseService {
    * resrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
-   * - It must be no longer than 64 characters.
    * @param {string[]} [params.patterns] - An array of patterns for the entity value. A value can specify either
-   * synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression no longer than
-   * 512 characters. For more information about how to specify a pattern, see the
-   * [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#entities-create-dictionary-based).
+   * synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression; for more
+   * information about how to specify a pattern, see the
+   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based).
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -2200,6 +2221,9 @@ class AssistantV1 extends BaseService {
    * Update an existing entity value with new or modified data. You must provide component objects defining the content
    * of the updated entity value.
    *
+   * If you want to update multiple entity values with a single API call, consider using the **[Update
+   * entity](#update-entity)** method instead.
+   *
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -2210,7 +2234,6 @@ class AssistantV1 extends BaseService {
    * restrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
-   * - It must be no longer than 64 characters.
    * @param {Object} [params.new_metadata] - Any metadata related to the entity value.
    * @param {string} [params.new_value_type] - Specifies the type of entity value.
    * @param {string[]} [params.new_synonyms] - An array of synonyms for the entity value. A value can specify either
@@ -2218,11 +2241,10 @@ class AssistantV1 extends BaseService {
    * resrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
-   * - It must be no longer than 64 characters.
    * @param {string[]} [params.new_patterns] - An array of patterns for the entity value. A value can specify either
-   * synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression no longer than
-   * 512 characters. For more information about how to specify a pattern, see the
-   * [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#entities-create-dictionary-based).
+   * synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression; for more
+   * information about how to specify a pattern, see the
+   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based).
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -2288,6 +2310,9 @@ class AssistantV1 extends BaseService {
    *
    * Add a new synonym to an entity value.
    *
+   * If you want to create multiple synonyms with a single API call, consider using the **[Update
+   * entity](#update-entity)** or **[Update entity value](#update-entity-value)** method instead.
+   *
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -2297,7 +2322,6 @@ class AssistantV1 extends BaseService {
    * @param {string} params.synonym - The text of the synonym. This string must conform to the following restrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
-   * - It must be no longer than 64 characters.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -2553,6 +2577,9 @@ class AssistantV1 extends BaseService {
    *
    * Update an existing entity value synonym with new text.
    *
+   * If you want to update multiple synonyms with a single API call, consider using the **[Update
+   * entity](#update-entity)** or **[Update entity value](#update-entity-value)** method instead.
+   *
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -2564,7 +2591,6 @@ class AssistantV1 extends BaseService {
    * restrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
-   * - It must be no longer than 64 characters.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -2627,31 +2653,32 @@ class AssistantV1 extends BaseService {
    *
    * Create a new dialog node.
    *
+   * If you want to create multiple dialog nodes with a single API call, consider using the **[Update
+   * workspace](#update-workspace)** method instead.
+   *
    * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.dialog_node - The dialog node ID. This string must conform to the following restrictions:
    * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
-   * - It must be no longer than 1024 characters.
    * @param {string} [params.description] - The description of the dialog node. This string cannot contain carriage
-   * return, newline, or tab characters, and it must be no longer than 128 characters.
+   * return, newline, or tab characters.
    * @param {string} [params.conditions] - The condition that will trigger the dialog node. This string cannot contain
-   * carriage return, newline, or tab characters, and it must be no longer than 2048 characters.
+   * carriage return, newline, or tab characters.
    * @param {string} [params.parent] - The ID of the parent dialog node. This property is omitted if the dialog node has
    * no parent.
    * @param {string} [params.previous_sibling] - The ID of the previous sibling dialog node. This property is omitted if
    * the dialog node has no previous sibling.
    * @param {DialogNodeOutput} [params.output] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
-   * [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#dialog-overview-responses).
+   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
    * @param {Object} [params.context] - The context for the dialog node.
    * @param {Object} [params.metadata] - The metadata for the dialog node.
    * @param {DialogNodeNextStep} [params.next_step] - The next step to execute following this dialog node.
    * @param {string} [params.title] - The alias used to identify the dialog node. This string must conform to the
    * following restrictions:
    * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
-   * - It must be no longer than 64 characters.
    * @param {string} [params.node_type] - How the dialog node is processed.
    * @param {string} [params.event_name] - How an `event_handler` node is processed.
    * @param {string} [params.variable] - The location in the dialog context where output is stored.
@@ -2662,7 +2689,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.digress_out_slots] - Whether the user can digress to top-level nodes while filling out
    * slots.
    * @param {string} [params.user_label] - A label that can be displayed externally to describe the purpose of the node
-   * to users. This string must be no longer than 512 characters.
+   * to users.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -2921,6 +2948,9 @@ class AssistantV1 extends BaseService {
    *
    * Update an existing dialog node with new or modified data.
    *
+   * If you want to update multiple dialog nodes with a single API call, consider using the **[Update
+   * workspace](#update-workspace)** method instead.
+   *
    * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -2929,25 +2959,23 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.new_dialog_node] - The dialog node ID. This string must conform to the following
    * restrictions:
    * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
-   * - It must be no longer than 1024 characters.
    * @param {string} [params.new_description] - The description of the dialog node. This string cannot contain carriage
-   * return, newline, or tab characters, and it must be no longer than 128 characters.
+   * return, newline, or tab characters.
    * @param {string} [params.new_conditions] - The condition that will trigger the dialog node. This string cannot
-   * contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters.
+   * contain carriage return, newline, or tab characters.
    * @param {string} [params.new_parent] - The ID of the parent dialog node. This property is omitted if the dialog node
    * has no parent.
    * @param {string} [params.new_previous_sibling] - The ID of the previous sibling dialog node. This property is
    * omitted if the dialog node has no previous sibling.
    * @param {DialogNodeOutput} [params.new_output] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
-   * [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#dialog-overview-responses).
+   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
    * @param {Object} [params.new_context] - The context for the dialog node.
    * @param {Object} [params.new_metadata] - The metadata for the dialog node.
    * @param {DialogNodeNextStep} [params.new_next_step] - The next step to execute following this dialog node.
    * @param {string} [params.new_title] - The alias used to identify the dialog node. This string must conform to the
    * following restrictions:
    * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
-   * - It must be no longer than 64 characters.
    * @param {string} [params.new_node_type] - How the dialog node is processed.
    * @param {string} [params.new_event_name] - How an `event_handler` node is processed.
    * @param {string} [params.new_variable] - The location in the dialog context where output is stored.
@@ -2958,7 +2986,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.new_digress_out_slots] - Whether the user can digress to top-level nodes while filling out
    * slots.
    * @param {string} [params.new_user_label] - A label that can be displayed externally to describe the purpose of the
-   * node to users. This string must be no longer than 512 characters.
+   * node to users.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -3043,7 +3071,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.filter - A cacheable parameter that limits the results to those matching the specified
    * filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id`
    * or `request.context.metadata.deployment`. For more information, see the
-   * [documentation](https://cloud.ibm.com/docs/services/assistant/filter-reference.html#filter-reference-syntax).
+   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference).
    * @param {string} [params.sort] - How to sort the returned log events. You can sort by **request_timestamp**. To
    * reverse the sort order, prefix the parameter value with a minus sign (`-`).
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
@@ -3109,7 +3137,7 @@ class AssistantV1 extends BaseService {
    * reverse the sort order, prefix the parameter value with a minus sign (`-`).
    * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified
    * filter. For more information, see the
-   * [documentation](https://cloud.ibm.com/docs/services/assistant/filter-reference.html#filter-reference-syntax).
+   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference).
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {Object} [params.headers] - Custom request headers
@@ -3176,7 +3204,7 @@ class AssistantV1 extends BaseService {
    *
    * You associate a customer ID with data by passing the `X-Watson-Metadata` header with a request that passes data.
    * For more information about personal data and customer IDs, see [Information
-   * security](https://cloud.ibm.com/docs/services/assistant/information-security.html).
+   * security](https://cloud.ibm.com/docs/services/assistant?topic=assistant-information-security#information-security).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
@@ -3242,14 +3270,29 @@ namespace AssistantV1 {
     iam_access_token?: string;
     iam_apikey?: string;
     iam_url?: string;
+    iam_client_id?: string;
+    iam_client_secret?: string;
+    icp4d_access_token?: string;
+    icp4d_url?: string;
     username?: string;
     password?: string;
+    token?: string;
+    authentication_type?: string;
+    disable_ssl_verification?: boolean;
     use_unauthenticated?: boolean;
     headers?: object;
   }
 
+  export interface Response<T = any>  {
+    result: T;
+    data: T; // for compatibility
+    status: number;
+    statusText: string;
+    headers: any;
+  }
+
   /** The callback for a service request. */
-  export type Callback<T> = (error: any, body?: T, response?: AxiosResponse<T>) => void;
+  export type Callback<T> = (error: any, body?: T, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
   export interface Empty { }
@@ -3282,9 +3325,9 @@ namespace AssistantV1 {
 
   /** Parameters for the `createWorkspace` operation. */
   export interface CreateWorkspaceParams {
-    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters. */
+    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters. */
     name?: string;
-    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
     /** The language of the workspace. */
     language?: string;
@@ -3365,9 +3408,9 @@ namespace AssistantV1 {
   export interface UpdateWorkspaceParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters. */
+    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters. */
     name?: string;
-    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
     /** The language of the workspace. */
     language?: string;
@@ -3395,9 +3438,9 @@ namespace AssistantV1 {
   export interface CreateIntentParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix `sys-`. - It must be no longer than 128 characters. */
+    /** The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix `sys-`. */
     intent: string;
-    /** The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    /** The description of the intent. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
     /** An array of user input examples for the intent. */
     examples?: Example[];
@@ -3464,9 +3507,9 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The intent name. */
     intent: string;
-    /** The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix `sys-`. - It must be no longer than 128 characters. */
+    /** The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix `sys-`. */
     new_intent?: string;
-    /** The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    /** The description of the intent. This string cannot contain carriage return, newline, or tab characters. */
     new_description?: string;
     /** An array of user input examples for the intent. */
     new_examples?: Example[];
@@ -3480,7 +3523,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The intent name. */
     intent: string;
-    /** The text of a user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 1024 characters. */
+    /** The text of a user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
     text: string;
     /** An array of contextual entity mentions. */
     mentions?: Mention[];
@@ -3551,7 +3594,7 @@ namespace AssistantV1 {
     intent: string;
     /** The text of the user input example. */
     text: string;
-    /** The text of the user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 1024 characters. */
+    /** The text of the user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
     new_text?: string;
     /** An array of contextual entity mentions. */
     new_mentions?: Mention[];
@@ -3563,7 +3606,7 @@ namespace AssistantV1 {
   export interface CreateCounterexampleParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters - It cannot consist of only whitespace characters - It must be no longer than 1024 characters. */
+    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
     text: string;
     headers?: Object;
     return_response?: boolean;
@@ -3624,7 +3667,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The text of a user input counterexample (for example, `What are you wearing?`). */
     text: string;
-    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters - It cannot consist of only whitespace characters - It must be no longer than 1024 characters. */
+    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
     new_text?: string;
     headers?: Object;
     return_response?: boolean;
@@ -3634,9 +3677,9 @@ namespace AssistantV1 {
   export interface CreateEntityParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It must be no longer than 64 characters. If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity that you want to enable. (Any entity content specified with the request is ignored.). */
+    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity that you want to enable. (Any entity content specified with the request is ignored.). */
     entity: string;
-    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
     /** Any metadata related to the entity. */
     metadata?: Object;
@@ -3707,9 +3750,9 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
-    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It cannot begin with the reserved prefix `sys-`. - It must be no longer than 64 characters. */
+    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It cannot begin with the reserved prefix `sys-`. */
     new_entity?: string;
-    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters. */
     new_description?: string;
     /** Any metadata related to the entity. */
     new_metadata?: Object;
@@ -3741,15 +3784,15 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
-    /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
+    /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
     value: string;
     /** Any metadata related to the entity value. */
     metadata?: Object;
     /** Specifies the type of entity value. */
     value_type?: CreateValueConstants.ValueType | string;
-    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
+    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
     synonyms?: string[];
-    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#entities-create-dictionary-based). */
+    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression; for more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based). */
     patterns?: string[];
     headers?: Object;
     return_response?: boolean;
@@ -3831,15 +3874,15 @@ namespace AssistantV1 {
     entity: string;
     /** The text of the entity value. */
     value: string;
-    /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
+    /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
     new_value?: string;
     /** Any metadata related to the entity value. */
     new_metadata?: Object;
     /** Specifies the type of entity value. */
     new_value_type?: UpdateValueConstants.ValueType | string;
-    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
+    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
     new_synonyms?: string[];
-    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#entities-create-dictionary-based). */
+    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression; for more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based). */
     new_patterns?: string[];
     headers?: Object;
     return_response?: boolean;
@@ -3862,7 +3905,7 @@ namespace AssistantV1 {
     entity: string;
     /** The text of the entity value. */
     value: string;
-    /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
+    /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
     synonym: string;
     headers?: Object;
     return_response?: boolean;
@@ -3939,7 +3982,7 @@ namespace AssistantV1 {
     value: string;
     /** The text of the synonym. */
     synonym: string;
-    /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
+    /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
     new_synonym?: string;
     headers?: Object;
     return_response?: boolean;
@@ -3949,17 +3992,17 @@ namespace AssistantV1 {
   export interface CreateDialogNodeParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The dialog node ID. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 1024 characters. */
+    /** The dialog node ID. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. */
     dialog_node: string;
-    /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
-    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
+    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters. */
     conditions?: string;
     /** The ID of the parent dialog node. This property is omitted if the dialog node has no parent. */
     parent?: string;
     /** The ID of the previous sibling dialog node. This property is omitted if the dialog node has no previous sibling. */
     previous_sibling?: string;
-    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#dialog-overview-responses). */
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses). */
     output?: DialogNodeOutput;
     /** The context for the dialog node. */
     context?: Object;
@@ -3967,7 +4010,7 @@ namespace AssistantV1 {
     metadata?: Object;
     /** The next step to execute following this dialog node. */
     next_step?: DialogNodeNextStep;
-    /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 64 characters. */
+    /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. */
     title?: string;
     /** How the dialog node is processed. */
     node_type?: CreateDialogNodeConstants.NodeType | string;
@@ -3983,7 +4026,7 @@ namespace AssistantV1 {
     digress_out?: CreateDialogNodeConstants.DigressOut | string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
     digress_out_slots?: CreateDialogNodeConstants.DigressOutSlots | string;
-    /** A label that can be displayed externally to describe the purpose of the node to users. This string must be no longer than 512 characters. */
+    /** A label that can be displayed externally to describe the purpose of the node to users. */
     user_label?: string;
     headers?: Object;
     return_response?: boolean;
@@ -4087,17 +4130,17 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The dialog node ID (for example, `get_order`). */
     dialog_node: string;
-    /** The dialog node ID. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 1024 characters. */
+    /** The dialog node ID. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. */
     new_dialog_node?: string;
-    /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters. */
     new_description?: string;
-    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
+    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters. */
     new_conditions?: string;
     /** The ID of the parent dialog node. This property is omitted if the dialog node has no parent. */
     new_parent?: string;
     /** The ID of the previous sibling dialog node. This property is omitted if the dialog node has no previous sibling. */
     new_previous_sibling?: string;
-    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#dialog-overview-responses). */
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses). */
     new_output?: DialogNodeOutput;
     /** The context for the dialog node. */
     new_context?: Object;
@@ -4105,7 +4148,7 @@ namespace AssistantV1 {
     new_metadata?: Object;
     /** The next step to execute following this dialog node. */
     new_next_step?: DialogNodeNextStep;
-    /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 64 characters. */
+    /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. */
     new_title?: string;
     /** How the dialog node is processed. */
     new_node_type?: UpdateDialogNodeConstants.NodeType | string;
@@ -4121,7 +4164,7 @@ namespace AssistantV1 {
     new_digress_out?: UpdateDialogNodeConstants.DigressOut | string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
     new_digress_out_slots?: UpdateDialogNodeConstants.DigressOutSlots | string;
-    /** A label that can be displayed externally to describe the purpose of the node to users. This string must be no longer than 512 characters. */
+    /** A label that can be displayed externally to describe the purpose of the node to users. */
     new_user_label?: string;
     headers?: Object;
     return_response?: boolean;
@@ -4172,7 +4215,7 @@ namespace AssistantV1 {
 
   /** Parameters for the `listAllLogs` operation. */
   export interface ListAllLogsParams {
-    /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://cloud.ibm.com/docs/services/assistant/filter-reference.html#filter-reference-syntax). */
+    /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference). */
     filter: string;
     /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order, prefix the parameter value with a minus sign (`-`). */
     sort?: string;
@@ -4190,7 +4233,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order, prefix the parameter value with a minus sign (`-`). */
     sort?: string;
-    /** A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://cloud.ibm.com/docs/services/assistant/filter-reference.html#filter-reference-syntax). */
+    /** A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference). */
     filter?: string;
     /** The number of records to return in each page of results. */
     page_limit?: number;
@@ -4228,13 +4271,13 @@ namespace AssistantV1 {
     system?: SystemResponse;
     /** Metadata related to the message. */
     metadata?: MessageContextMetadata;
-    /** Context accepts additional properties. */
+    /** Context accepts additional properties of type any. */
     [propName: string]: any;
   }
 
   /** Counterexample. */
   export interface Counterexample {
-    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters - It cannot consist of only whitespace characters - It must be no longer than 1024 characters. */
+    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
     text: string;
     /** The timestamp for creation of the object. */
     created?: string;
@@ -4252,9 +4295,9 @@ namespace AssistantV1 {
 
   /** CreateEntity. */
   export interface CreateEntity {
-    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It must be no longer than 64 characters. If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity that you want to enable. (Any entity content specified with the request is ignored.). */
+    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity that you want to enable. (Any entity content specified with the request is ignored.). */
     entity: string;
-    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
     /** Any metadata related to the entity. */
     metadata?: Object;
@@ -4270,9 +4313,9 @@ namespace AssistantV1 {
 
   /** CreateIntent. */
   export interface CreateIntent {
-    /** The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix `sys-`. - It must be no longer than 128 characters. */
+    /** The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix `sys-`. */
     intent: string;
-    /** The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    /** The description of the intent. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
     /** The timestamp for creation of the object. */
     created?: string;
@@ -4284,15 +4327,15 @@ namespace AssistantV1 {
 
   /** CreateValue. */
   export interface CreateValue {
-    /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
+    /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
     value: string;
     /** Any metadata related to the entity value. */
     metadata?: Object;
     /** Specifies the type of entity value. */
     value_type?: string;
-    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
+    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
     synonyms?: string[];
-    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#entities-create-dictionary-based). */
+    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression; for more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based). */
     patterns?: string[];
     /** The timestamp for creation of the object. */
     created?: string;
@@ -4302,17 +4345,17 @@ namespace AssistantV1 {
 
   /** DialogNode. */
   export interface DialogNode {
-    /** The dialog node ID. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 1024 characters. */
+    /** The dialog node ID. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. */
     dialog_node: string;
-    /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
-    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
+    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters. */
     conditions?: string;
     /** The ID of the parent dialog node. This property is omitted if the dialog node has no parent. */
     parent?: string;
     /** The ID of the previous sibling dialog node. This property is omitted if the dialog node has no previous sibling. */
     previous_sibling?: string;
-    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#dialog-overview-responses). */
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses). */
     output?: DialogNodeOutput;
     /** The context for the dialog node. */
     context?: Object;
@@ -4320,7 +4363,7 @@ namespace AssistantV1 {
     metadata?: Object;
     /** The next step to execute following this dialog node. */
     next_step?: DialogNodeNextStep;
-    /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 64 characters. */
+    /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. */
     title?: string;
     /** How the dialog node is processed. */
     node_type?: string;
@@ -4336,7 +4379,7 @@ namespace AssistantV1 {
     digress_out?: string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
     digress_out_slots?: string;
-    /** A label that can be displayed externally to describe the purpose of the node to users. This string must be no longer than 512 characters. */
+    /** A label that can be displayed externally to describe the purpose of the node to users. */
     user_label?: string;
     /** For internal use only. */
     disabled?: boolean;
@@ -4378,13 +4421,13 @@ namespace AssistantV1 {
     selector?: string;
   }
 
-  /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#dialog-overview-responses). */
+  /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses). */
   export interface DialogNodeOutput {
     /** An array of objects describing the output defined for the dialog node. */
     generic?: DialogNodeOutputGeneric[];
     /** Options that modify how specified output is handled. */
     modifiers?: DialogNodeOutputModifiers;
-    /** DialogNodeOutput accepts additional properties. */
+    /** DialogNodeOutput accepts additional properties of type any. */
     [propName: string]: any;
   }
 
@@ -4404,21 +4447,21 @@ namespace AssistantV1 {
     typing?: boolean;
     /** The URL of the image. Required when **response_type**=`image`. */
     source?: string;
-    /** An optional title to show before the response. Valid only when **response_type**=`image` or `option`. This string must be no longer than 512 characters. */
+    /** An optional title to show before the response. Valid only when **response_type**=`image` or `option`. */
     title?: string;
-    /** An optional description to show with the response. Valid only when **response_type**=`image` or `option`. This string must be no longer than 256 characters. */
+    /** An optional description to show with the response. Valid only when **response_type**=`image` or `option`. */
     description?: string;
     /** The preferred type of control to display, if supported by the channel. Valid only when **response_type**=`option`. */
     preference?: string;
     /** An array of objects describing the options from which the user can choose. You can include up to 20 options. Required when **response_type**=`option`. */
     options?: DialogNodeOutputOptionsElement[];
-    /** An optional message to be sent to the human agent who will be taking over the conversation. Valid only when **reponse_type**=`connect_to_agent`. This string must be no longer than 256 characters. */
+    /** An optional message to be sent to the human agent who will be taking over the conversation. Valid only when **reponse_type**=`connect_to_agent`. */
     message_to_human_agent?: string;
   }
 
   /** Options that modify how specified output is handled. */
   export interface DialogNodeOutputModifiers {
-    /** Whether values in the output will overwrite output values in an array specified by previously executed dialog nodes. If this option is set to **false**, new values will be appended to previously specified values. */
+    /** Whether values in the output will overwrite output values in an array specified by previously executed dialog nodes. If this option is set to `false`, new values will be appended to previously specified values. */
     overwrite?: boolean;
   }
 
@@ -4434,11 +4477,15 @@ namespace AssistantV1 {
   export interface DialogNodeOutputOptionsElementValue {
     /** An input object that includes the input text. */
     input?: MessageInput;
+    /** An array of intents to be used while processing the input. **Note:** This property is supported for backward compatibility with applications that use the v1 **Get response to user input** method. */
+    intents?: RuntimeIntent[];
+    /** An array of entities to be used while processing the user input. **Note:** This property is supported for backward compatibility with applications that use the v1 **Get response to user input** method. */
+    entities?: RuntimeEntity[];
   }
 
   /** DialogNodeOutputTextValuesElement. */
   export interface DialogNodeOutputTextValuesElement {
-    /** The text of a response. This string can include newline characters (`\\n`), Markdown tagging, or other special characters, if supported by the channel. It must be no longer than 4096 characters. */
+    /** The text of a response. This string can include newline characters (`\\n`), Markdown tagging, or other special characters, if supported by the channel. */
     text?: string;
   }
 
@@ -4506,9 +4553,9 @@ namespace AssistantV1 {
 
   /** Entity. */
   export interface Entity {
-    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It must be no longer than 64 characters. If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity that you want to enable. (Any entity content specified with the request is ignored.). */
+    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity that you want to enable. (Any entity content specified with the request is ignored.). */
     entity: string;
-    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
     /** Any metadata related to the entity. */
     metadata?: Object;
@@ -4550,7 +4597,7 @@ namespace AssistantV1 {
 
   /** Example. */
   export interface Example {
-    /** The text of a user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 1024 characters. */
+    /** The text of a user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
     text: string;
     /** An array of contextual entity mentions. */
     mentions?: Mention[];
@@ -4570,9 +4617,9 @@ namespace AssistantV1 {
 
   /** Intent. */
   export interface Intent {
-    /** The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix `sys-`. - It must be no longer than 128 characters. */
+    /** The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix `sys-`. */
     intent: string;
-    /** The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    /** The description of the intent. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
     /** The timestamp for creation of the object. */
     created?: string;
@@ -4622,7 +4669,7 @@ namespace AssistantV1 {
     level: string;
     /** The text of the log message. */
     msg: string;
-    /** LogMessage accepts additional properties. */
+    /** LogMessage accepts additional properties of type any. */
     [propName: string]: any;
   }
 
@@ -4654,9 +4701,9 @@ namespace AssistantV1 {
 
   /** An input object that includes the input text. */
   export interface MessageInput {
-    /** The text of the user input. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 2048 characters. */
+    /** The text of the user input. This string cannot contain carriage return, newline, or tab characters. */
     text?: string;
-    /** MessageInput accepts additional properties. */
+    /** MessageInput accepts additional properties of type any. */
     [propName: string]: any;
   }
 
@@ -4708,7 +4755,7 @@ namespace AssistantV1 {
     nodes_visited?: string[];
     /** An array of objects containing detailed diagnostic information about the nodes that were triggered during processing of the input message. Included only if **nodes_visited_details** is set to `true` in the message request. */
     nodes_visited_details?: DialogNodeVisitedDetails[];
-    /** OutputData accepts additional properties. */
+    /** OutputData accepts additional properties of type any. */
     [propName: string]: any;
   }
 
@@ -4742,7 +4789,7 @@ namespace AssistantV1 {
     metadata?: Object;
     /** The recognized capture groups for the entity, as defined by the entity pattern. */
     groups?: CaptureGroup[];
-    /** RuntimeEntity accepts additional properties. */
+    /** RuntimeEntity accepts additional properties of type any. */
     [propName: string]: any;
   }
 
@@ -4752,13 +4799,13 @@ namespace AssistantV1 {
     intent: string;
     /** A decimal percentage that represents Watson's confidence in the intent. */
     confidence: number;
-    /** RuntimeIntent accepts additional properties. */
+    /** RuntimeIntent accepts additional properties of type any. */
     [propName: string]: any;
   }
 
   /** Synonym. */
   export interface Synonym {
-    /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
+    /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
     synonym: string;
     /** The timestamp for creation of the object. */
     created?: string;
@@ -4776,21 +4823,21 @@ namespace AssistantV1 {
 
   /** For internal use only. */
   export interface SystemResponse {
-    /** SystemResponse accepts additional properties. */
+    /** SystemResponse accepts additional properties of type any. */
     [propName: string]: any;
   }
 
   /** Value. */
   export interface Value {
-    /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
+    /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
     value: string;
     /** Any metadata related to the entity value. */
     metadata?: Object;
     /** Specifies the type of entity value. */
     value_type: string;
-    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
+    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
     synonyms?: string[];
-    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#entities-create-dictionary-based). */
+    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression; for more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based). */
     patterns?: string[];
     /** The timestamp for creation of the object. */
     created?: string;
@@ -4808,9 +4855,9 @@ namespace AssistantV1 {
 
   /** Workspace. */
   export interface Workspace {
-    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters. */
+    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters. */
     name: string;
-    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
+    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
     /** The language of the workspace. */
     language: string;
@@ -4848,7 +4895,7 @@ namespace AssistantV1 {
 
   /** Global settings for the workspace. */
   export interface WorkspaceSystemSettings {
-    /** Workspace settings related to the Watson Assistant tool. */
+    /** Workspace settings related to the Watson Assistant user interface. */
     tooling?: WorkspaceSystemSettingsTooling;
     /** Workspace settings related to the disambiguation feature. **Note:** This feature is available only to Premium users. */
     disambiguation?: WorkspaceSystemSettingsDisambiguation;
@@ -4868,7 +4915,7 @@ namespace AssistantV1 {
     sensitivity?: string;
   }
 
-  /** Workspace settings related to the Watson Assistant tool. */
+  /** Workspace settings related to the Watson Assistant user interface. */
   export interface WorkspaceSystemSettingsTooling {
     /** Whether the dialog JSON editor displays text responses within the `output.generic` object. */
     store_generic_responses?: boolean;

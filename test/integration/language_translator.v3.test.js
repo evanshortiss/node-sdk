@@ -6,11 +6,11 @@ const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
 const serviceErrorUtils = require('../resources/service_error_util');
+const fs = require('fs');
 
 // todo: figure out why these started all failing with Not Authorized
 describe('language_translator_integration', function() {
   jest.setTimeout(TWENTY_SECONDS * 2);
-
   auth.language_translator.version = '2019-03-27';
   const language_translator = new LanguageTranslatorV3(auth.language_translator);
 
@@ -39,5 +39,79 @@ describe('language_translator_integration', function() {
       text: 'this is an important test that needs to work',
     };
     language_translator.identify(params, serviceErrorUtils.checkErrorCode(200, done));
+  });
+
+  describe('models', function() {
+    let base_model_id;
+    let model_id;
+    it('should list all the models', function(done) {
+      language_translator.listModels(
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          base_model_id = res.models[0].model_id;
+          done();
+        })
+      );
+    });
+
+    it('should create a model', function(done) {
+      language_translator.createModel(
+        {
+          base_model_id: base_model_id,
+          forced_glossary: fs.createReadStream('./test/resources/glossary.tmx'),
+        },
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          model_id = res.model_id;
+          done();
+        })
+      );
+    });
+
+    it('should get the details of the model', function(done) {
+      if (!model_id) {
+        // We cannot run this test when model creation failed.
+        return done();
+      }
+
+      language_translator.getModel({ model_id }, serviceErrorUtils.checkErrorCode(200, done));
+    });
+
+    it('should delete the model', function(done) {
+      if (!model_id) {
+        // We cannot run this test when model creation failed.
+        return done();
+      }
+
+      language_translator.deleteModel({ model_id }, serviceErrorUtils.checkErrorCode(200, done));
+    });
+  });
+
+  describe('documentTranslation', function() {
+    let document_id;
+    // The service was down, could not test the test.
+    it('should translate document', function(done) {
+      language_translator.translateDocument(
+        {
+          file: fs.createReadStream('./test/resources/hello-world.txt'),
+          model_id: 'en-es',
+        },
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          document_id = res.document_id;
+          console.log(res);
+          done();
+        })
+      );
+    });
+
+    it('should list translated documents', function(done) {
+      done();
+    });
+
+    it('should get translated document', function(done) {
+      done();
+    });
+
+    it('should delete document', function(done) {
+      done();
+    });
   });
 });
