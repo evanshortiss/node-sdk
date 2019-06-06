@@ -16,6 +16,7 @@
 
 import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
+import { OutgoingHttpHeaders } from 'http';
 import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
@@ -41,7 +42,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
    * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.cloud.ibm.com/identity/token'.
    * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
-   * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
+   * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
    * @returns {AssistantV1}
@@ -82,7 +83,7 @@ class AssistantV1 extends BaseService {
    * that were triggered, and messages from the log.
    * @param {boolean} [params.nodes_visited_details] - Whether to include additional diagnostic information about the
    * dialog nodes that were visited during processing of the message.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -160,7 +161,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.description] - The description of the workspace. This string cannot contain carriage
    * return, newline, or tab characters, and it must be no longer than 128 characters.
    * @param {string} [params.language] - The language of the workspace.
-   * @param {Object} [params.metadata] - Any metadata related to the workspace.
+   * @param {JsonObject} [params.metadata] - Any metadata related to the workspace.
    * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace (including artifacts such as
    * intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training
    * data is not to be used.
@@ -170,7 +171,7 @@ class AssistantV1 extends BaseService {
    * @param {DialogNode[]} [params.dialog_nodes] - An array of objects describing the dialog nodes in the workspace.
    * @param {Counterexample[]} [params.counterexamples] - An array of objects defining input examples that have been
    * marked as irrelevant input.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -227,7 +228,7 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -289,7 +290,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.sort] - Indicates how the returned workspace data will be sorted. This parameter is valid
    * only if **export**=`true`. Specify `sort=stable` to sort all workspace objects by unique identifier, in ascending
    * alphabetical order.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -355,7 +356,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -412,7 +413,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.description] - The description of the workspace. This string cannot contain carriage
    * return, newline, or tab characters, and it must be no longer than 128 characters.
    * @param {string} [params.language] - The language of the workspace.
-   * @param {Object} [params.metadata] - Any metadata related to the workspace.
+   * @param {JsonObject} [params.metadata] - Any metadata related to the workspace.
    * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace (including artifacts such as
    * intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training
    * data is not to be used.
@@ -429,7 +430,7 @@ class AssistantV1 extends BaseService {
    *
    * If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new
    * data collide with existing elements, the update request fails.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -513,7 +514,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.description] - The description of the intent. This string cannot contain carriage return,
    * newline, or tab characters, and it must be no longer than 128 characters.
    * @param {Example[]} [params.examples] - An array of user input examples for the intent.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -575,7 +576,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -636,7 +637,7 @@ class AssistantV1 extends BaseService {
    * content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -707,7 +708,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -780,7 +781,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.new_description] - The description of the intent. This string cannot contain carriage
    * return, newline, or tab characters, and it must be no longer than 128 characters.
    * @param {Example[]} [params.new_examples] - An array of user input examples for the intent.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -853,7 +854,7 @@ class AssistantV1 extends BaseService {
    * - It cannot consist of only whitespace characters.
    * - It must be no longer than 1024 characters.
    * @param {Mention[]} [params.mentions] - An array of contextual entity mentions.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -916,7 +917,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of the user input example.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -975,7 +976,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.text - The text of the user input example.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1043,7 +1044,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1114,7 +1115,7 @@ class AssistantV1 extends BaseService {
    * - It cannot consist of only whitespace characters.
    * - It must be no longer than 1024 characters.
    * @param {Mention[]} [params.new_mentions] - An array of contextual entity mentions.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1185,7 +1186,7 @@ class AssistantV1 extends BaseService {
    * - It cannot contain carriage return, newline, or tab characters
    * - It cannot consist of only whitespace characters
    * - It must be no longer than 1024 characters.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1245,7 +1246,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1302,7 +1303,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1368,7 +1369,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1436,7 +1437,7 @@ class AssistantV1 extends BaseService {
    * - It cannot contain carriage return, newline, or tab characters
    * - It cannot consist of only whitespace characters
    * - It must be no longer than 1024 characters.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1508,10 +1509,10 @@ class AssistantV1 extends BaseService {
    * that you want to enable. (Any entity content specified with the request is ignored.).
    * @param {string} [params.description] - The description of the entity. This string cannot contain carriage return,
    * newline, or tab characters, and it must be no longer than 128 characters.
-   * @param {Object} [params.metadata] - Any metadata related to the entity.
+   * @param {JsonObject} [params.metadata] - Any metadata related to the entity.
    * @param {boolean} [params.fuzzy_match] - Whether to use fuzzy matching for the entity.
    * @param {CreateValue[]} [params.values] - An array of objects describing the entity values.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1575,7 +1576,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1636,7 +1637,7 @@ class AssistantV1 extends BaseService {
    * content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1707,7 +1708,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1779,10 +1780,10 @@ class AssistantV1 extends BaseService {
    * - It must be no longer than 64 characters.
    * @param {string} [params.new_description] - The description of the entity. This string cannot contain carriage
    * return, newline, or tab characters, and it must be no longer than 128 characters.
-   * @param {Object} [params.new_metadata] - Any metadata related to the entity.
+   * @param {JsonObject} [params.new_metadata] - Any metadata related to the entity.
    * @param {boolean} [params.new_fuzzy_match] - Whether to use fuzzy matching for the entity.
    * @param {CreateValue[]} [params.new_values] - An array of objects describing the entity values.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1857,7 +1858,7 @@ class AssistantV1 extends BaseService {
    * content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1927,7 +1928,7 @@ class AssistantV1 extends BaseService {
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
    * - It must be no longer than 64 characters.
-   * @param {Object} [params.metadata] - Any metadata related to the entity value.
+   * @param {JsonObject} [params.metadata] - Any metadata related to the entity value.
    * @param {string} [params.value_type] - Specifies the type of entity value.
    * @param {string[]} [params.synonyms] - An array of synonyms for the entity value. A value can specify either
    * synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following
@@ -1939,7 +1940,7 @@ class AssistantV1 extends BaseService {
    * synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression no longer than
    * 512 characters. For more information about how to specify a pattern, see the
    * [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#entities-create-dictionary-based).
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2005,7 +2006,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2067,7 +2068,7 @@ class AssistantV1 extends BaseService {
    * content, including subelements, is included.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2139,7 +2140,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2211,7 +2212,7 @@ class AssistantV1 extends BaseService {
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
    * - It must be no longer than 64 characters.
-   * @param {Object} [params.new_metadata] - Any metadata related to the entity value.
+   * @param {JsonObject} [params.new_metadata] - Any metadata related to the entity value.
    * @param {string} [params.new_value_type] - Specifies the type of entity value.
    * @param {string[]} [params.new_synonyms] - An array of synonyms for the entity value. A value can specify either
    * synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following
@@ -2223,7 +2224,7 @@ class AssistantV1 extends BaseService {
    * synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression no longer than
    * 512 characters. For more information about how to specify a pattern, see the
    * [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#entities-create-dictionary-based).
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2298,7 +2299,7 @@ class AssistantV1 extends BaseService {
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
    * - It must be no longer than 64 characters.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2362,7 +2363,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2423,7 +2424,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.synonym - The text of the synonym.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2493,7 +2494,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2565,7 +2566,7 @@ class AssistantV1 extends BaseService {
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
    * - It must be no longer than 64 characters.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2645,8 +2646,8 @@ class AssistantV1 extends BaseService {
    * @param {DialogNodeOutput} [params.output] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
    * [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#dialog-overview-responses).
-   * @param {Object} [params.context] - The context for the dialog node.
-   * @param {Object} [params.metadata] - The metadata for the dialog node.
+   * @param {JsonObject} [params.context] - The context for the dialog node.
+   * @param {JsonObject} [params.metadata] - The metadata for the dialog node.
    * @param {DialogNodeNextStep} [params.next_step] - The next step to execute following this dialog node.
    * @param {string} [params.title] - The alias used to identify the dialog node. This string must conform to the
    * following restrictions:
@@ -2663,7 +2664,7 @@ class AssistantV1 extends BaseService {
    * slots.
    * @param {string} [params.user_label] - A label that can be displayed externally to describe the purpose of the node
    * to users. This string must be no longer than 512 characters.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2740,7 +2741,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspace_id - Unique identifier of the workspace.
    * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2797,7 +2798,7 @@ class AssistantV1 extends BaseService {
    * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2863,7 +2864,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2941,8 +2942,8 @@ class AssistantV1 extends BaseService {
    * @param {DialogNodeOutput} [params.new_output] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
    * [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#dialog-overview-responses).
-   * @param {Object} [params.new_context] - The context for the dialog node.
-   * @param {Object} [params.new_metadata] - The metadata for the dialog node.
+   * @param {JsonObject} [params.new_context] - The context for the dialog node.
+   * @param {JsonObject} [params.new_metadata] - The metadata for the dialog node.
    * @param {DialogNodeNextStep} [params.new_next_step] - The next step to execute following this dialog node.
    * @param {string} [params.new_title] - The alias used to identify the dialog node. This string must conform to the
    * following restrictions:
@@ -2959,7 +2960,7 @@ class AssistantV1 extends BaseService {
    * slots.
    * @param {string} [params.new_user_label] - A label that can be displayed externally to describe the purpose of the
    * node to users. This string must be no longer than 512 characters.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3048,7 +3049,7 @@ class AssistantV1 extends BaseService {
    * reverse the sort order, prefix the parameter value with a minus sign (`-`).
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3112,7 +3113,7 @@ class AssistantV1 extends BaseService {
    * [documentation](https://cloud.ibm.com/docs/services/assistant/filter-reference.html#filter-reference-syntax).
    * @param {number} [params.page_limit] - The number of records to return in each page of results.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3180,7 +3181,7 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3245,7 +3246,7 @@ namespace AssistantV1 {
     username?: string;
     password?: string;
     use_unauthenticated?: boolean;
-    headers?: object;
+    headers?: OutgoingHttpHeaders;
   }
 
   /** The callback for a service request. */
@@ -3253,6 +3254,11 @@ namespace AssistantV1 {
 
   /** The body of a service request that returns no response data. */
   export interface Empty { }
+
+  /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
+  export interface JsonObject {
+    [key: string]: any;
+  }
 
   /*************************
    * request interfaces
@@ -3276,7 +3282,7 @@ namespace AssistantV1 {
     output?: OutputData;
     /** Whether to include additional diagnostic information about the dialog nodes that were visited during processing of the message. */
     nodes_visited_details?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3289,7 +3295,7 @@ namespace AssistantV1 {
     /** The language of the workspace. */
     language?: string;
     /** Any metadata related to the workspace. */
-    metadata?: Object;
+    metadata?: JsonObject;
     /** Whether training data from the workspace (including artifacts such as intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out?: boolean;
     /** Global settings for the workspace. */
@@ -3302,7 +3308,7 @@ namespace AssistantV1 {
     dialog_nodes?: DialogNode[];
     /** An array of objects defining input examples that have been marked as irrelevant input. */
     counterexamples?: Counterexample[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3310,7 +3316,7 @@ namespace AssistantV1 {
   export interface DeleteWorkspaceParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3324,7 +3330,7 @@ namespace AssistantV1 {
     include_audit?: boolean;
     /** Indicates how the returned workspace data will be sorted. This parameter is valid only if **export**=`true`. Specify `sort=stable` to sort all workspace objects by unique identifier, in ascending alphabetical order. */
     sort?: GetWorkspaceConstants.Sort | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3348,7 +3354,7 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3372,7 +3378,7 @@ namespace AssistantV1 {
     /** The language of the workspace. */
     language?: string;
     /** Any metadata related to the workspace. */
-    metadata?: Object;
+    metadata?: JsonObject;
     /** Whether training data from the workspace (including artifacts such as intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out?: boolean;
     /** Global settings for the workspace. */
@@ -3387,7 +3393,7 @@ namespace AssistantV1 {
     counterexamples?: Counterexample[];
     /** Whether the new data is to be appended to the existing data in the workspace. If **append**=`false`, elements included in the new data completely replace the corresponding existing elements, including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing entities in the workspace are discarded and replaced with the new entities. If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new data collide with existing elements, the update request fails. */
     append?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3401,7 +3407,7 @@ namespace AssistantV1 {
     description?: string;
     /** An array of user input examples for the intent. */
     examples?: Example[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3411,7 +3417,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The intent name. */
     intent: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3425,7 +3431,7 @@ namespace AssistantV1 {
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3445,7 +3451,7 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3470,7 +3476,7 @@ namespace AssistantV1 {
     new_description?: string;
     /** An array of user input examples for the intent. */
     new_examples?: Example[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3484,7 +3490,7 @@ namespace AssistantV1 {
     text: string;
     /** An array of contextual entity mentions. */
     mentions?: Mention[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3496,7 +3502,7 @@ namespace AssistantV1 {
     intent: string;
     /** The text of the user input example. */
     text: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3510,7 +3516,7 @@ namespace AssistantV1 {
     text: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3530,7 +3536,7 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3555,7 +3561,7 @@ namespace AssistantV1 {
     new_text?: string;
     /** An array of contextual entity mentions. */
     new_mentions?: Mention[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3565,7 +3571,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters - It cannot consist of only whitespace characters - It must be no longer than 1024 characters. */
     text: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3575,7 +3581,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The text of a user input counterexample (for example, `What are you wearing?`). */
     text: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3587,7 +3593,7 @@ namespace AssistantV1 {
     text: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3605,7 +3611,7 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3626,7 +3632,7 @@ namespace AssistantV1 {
     text: string;
     /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters - It cannot consist of only whitespace characters - It must be no longer than 1024 characters. */
     new_text?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3639,12 +3645,12 @@ namespace AssistantV1 {
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
     /** Any metadata related to the entity. */
-    metadata?: Object;
+    metadata?: JsonObject;
     /** Whether to use fuzzy matching for the entity. */
     fuzzy_match?: boolean;
     /** An array of objects describing the entity values. */
     values?: CreateValue[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3654,7 +3660,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3668,7 +3674,7 @@ namespace AssistantV1 {
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3688,7 +3694,7 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3712,12 +3718,12 @@ namespace AssistantV1 {
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     new_description?: string;
     /** Any metadata related to the entity. */
-    new_metadata?: Object;
+    new_metadata?: JsonObject;
     /** Whether to use fuzzy matching for the entity. */
     new_fuzzy_match?: boolean;
     /** An array of objects describing the entity values. */
     new_values?: CreateValue[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3731,7 +3737,7 @@ namespace AssistantV1 {
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3744,14 +3750,14 @@ namespace AssistantV1 {
     /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     value: string;
     /** Any metadata related to the entity value. */
-    metadata?: Object;
+    metadata?: JsonObject;
     /** Specifies the type of entity value. */
     value_type?: CreateValueConstants.ValueType | string;
     /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     synonyms?: string[];
     /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#entities-create-dictionary-based). */
     patterns?: string[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3772,7 +3778,7 @@ namespace AssistantV1 {
     entity: string;
     /** The text of the entity value. */
     value: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3788,7 +3794,7 @@ namespace AssistantV1 {
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3810,7 +3816,7 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3834,14 +3840,14 @@ namespace AssistantV1 {
     /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     new_value?: string;
     /** Any metadata related to the entity value. */
-    new_metadata?: Object;
+    new_metadata?: JsonObject;
     /** Specifies the type of entity value. */
     new_value_type?: UpdateValueConstants.ValueType | string;
     /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     new_synonyms?: string[];
     /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#entities-create-dictionary-based). */
     new_patterns?: string[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3864,7 +3870,7 @@ namespace AssistantV1 {
     value: string;
     /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     synonym: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3878,7 +3884,7 @@ namespace AssistantV1 {
     value: string;
     /** The text of the synonym. */
     synonym: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3894,7 +3900,7 @@ namespace AssistantV1 {
     synonym: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3916,7 +3922,7 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3941,7 +3947,7 @@ namespace AssistantV1 {
     synonym: string;
     /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     new_synonym?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3962,9 +3968,9 @@ namespace AssistantV1 {
     /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#dialog-overview-responses). */
     output?: DialogNodeOutput;
     /** The context for the dialog node. */
-    context?: Object;
+    context?: JsonObject;
     /** The metadata for the dialog node. */
-    metadata?: Object;
+    metadata?: JsonObject;
     /** The next step to execute following this dialog node. */
     next_step?: DialogNodeNextStep;
     /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 64 characters. */
@@ -3985,7 +3991,7 @@ namespace AssistantV1 {
     digress_out_slots?: CreateDialogNodeConstants.DigressOutSlots | string;
     /** A label that can be displayed externally to describe the purpose of the node to users. This string must be no longer than 512 characters. */
     user_label?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4038,7 +4044,7 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The dialog node ID (for example, `get_order`). */
     dialog_node: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4050,7 +4056,7 @@ namespace AssistantV1 {
     dialog_node: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4068,7 +4074,7 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4100,9 +4106,9 @@ namespace AssistantV1 {
     /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#dialog-overview-responses). */
     new_output?: DialogNodeOutput;
     /** The context for the dialog node. */
-    new_context?: Object;
+    new_context?: JsonObject;
     /** The metadata for the dialog node. */
-    new_metadata?: Object;
+    new_metadata?: JsonObject;
     /** The next step to execute following this dialog node. */
     new_next_step?: DialogNodeNextStep;
     /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 64 characters. */
@@ -4123,7 +4129,7 @@ namespace AssistantV1 {
     new_digress_out_slots?: UpdateDialogNodeConstants.DigressOutSlots | string;
     /** A label that can be displayed externally to describe the purpose of the node to users. This string must be no longer than 512 characters. */
     new_user_label?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4180,7 +4186,7 @@ namespace AssistantV1 {
     page_limit?: number;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4196,7 +4202,7 @@ namespace AssistantV1 {
     page_limit?: number;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4204,7 +4210,7 @@ namespace AssistantV1 {
   export interface DeleteUserDataParams {
     /** The customer ID for which all data is to be deleted. */
     customer_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4257,7 +4263,7 @@ namespace AssistantV1 {
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
     /** Any metadata related to the entity. */
-    metadata?: Object;
+    metadata?: JsonObject;
     /** Whether to use fuzzy matching for the entity. */
     fuzzy_match?: boolean;
     /** The timestamp for creation of the object. */
@@ -4287,7 +4293,7 @@ namespace AssistantV1 {
     /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     value: string;
     /** Any metadata related to the entity value. */
-    metadata?: Object;
+    metadata?: JsonObject;
     /** Specifies the type of entity value. */
     value_type?: string;
     /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
@@ -4315,9 +4321,9 @@ namespace AssistantV1 {
     /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#dialog-overview-responses). */
     output?: DialogNodeOutput;
     /** The context for the dialog node. */
-    context?: Object;
+    context?: JsonObject;
     /** The metadata for the dialog node. */
-    metadata?: Object;
+    metadata?: JsonObject;
     /** The next step to execute following this dialog node. */
     next_step?: DialogNodeNextStep;
     /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 64 characters. */
@@ -4353,7 +4359,7 @@ namespace AssistantV1 {
     /** The type of action to invoke. */
     action_type?: string;
     /** A map of key/value pairs to be provided to the action. */
-    parameters?: Object;
+    parameters?: JsonObject;
     /** The location in the dialog context where the result of the action is stored. */
     result_variable: string;
     /** The name of the context variable that the client application will use to pass in credentials for the action. */
@@ -4489,7 +4495,7 @@ namespace AssistantV1 {
     /** An object defining the message input, intents, and entities to be sent to the Watson Assistant service if the user selects the corresponding disambiguation option. */
     value: DialogSuggestionValue;
     /** The dialog output that will be returned from the Watson Assistant service if the user selects the corresponding option. */
-    output?: Object;
+    output?: JsonObject;
     /** The ID of the dialog node that the **label** property is taken from. The **label** property is populated using the value of the dialog node's **user_label** property. */
     dialog_node?: string;
   }
@@ -4511,7 +4517,7 @@ namespace AssistantV1 {
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
     /** Any metadata related to the entity. */
-    metadata?: Object;
+    metadata?: JsonObject;
     /** Whether to use fuzzy matching for the entity. */
     fuzzy_match?: boolean;
     /** The timestamp for creation of the object. */
@@ -4739,7 +4745,7 @@ namespace AssistantV1 {
     /** A decimal percentage that represents Watson's confidence in the entity. */
     confidence?: number;
     /** Any metadata for the entity. */
-    metadata?: Object;
+    metadata?: JsonObject;
     /** The recognized capture groups for the entity, as defined by the entity pattern. */
     groups?: CaptureGroup[];
     /** RuntimeEntity accepts additional properties. */
@@ -4785,7 +4791,7 @@ namespace AssistantV1 {
     /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     value: string;
     /** Any metadata related to the entity value. */
-    metadata?: Object;
+    metadata?: JsonObject;
     /** Specifies the type of entity value. */
     value_type: string;
     /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
@@ -4815,7 +4821,7 @@ namespace AssistantV1 {
     /** The language of the workspace. */
     language: string;
     /** Any metadata related to the workspace. */
-    metadata?: Object;
+    metadata?: JsonObject;
     /** Whether training data from the workspace (including artifacts such as intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out: boolean;
     /** Global settings for the workspace. */
@@ -4853,7 +4859,7 @@ namespace AssistantV1 {
     /** Workspace settings related to the disambiguation feature. **Note:** This feature is available only to Premium users. */
     disambiguation?: WorkspaceSystemSettingsDisambiguation;
     /** For internal use only. */
-    human_agent_assist?: Object;
+    human_agent_assist?: JsonObject;
   }
 
   /** Workspace settings related to the disambiguation feature. **Note:** This feature is available only to Premium users. */
