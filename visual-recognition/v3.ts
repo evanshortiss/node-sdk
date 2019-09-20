@@ -109,8 +109,8 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public classify(params: VisualRecognitionV3.ClassifyParamsRaw, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.ClassifiedImages>): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.ClassifiedImages>>
-  public classify(params: VisualRecognitionV3.ClassifyParamsBase, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.ClassifiedImages>): Promise<VisualRecognitionV3.ClassifiedImages|VisualRecognitionV3.Response<VisualRecognitionV3.ClassifiedImages>> {
+  public classify(params?: VisualRecognitionV3.ClassifyParamsBase|{ return_response: true }, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.ClassifiedImages>): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.ClassifiedImages>>
+  public classify(params?: VisualRecognitionV3.ClassifyParamsBase, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.ClassifiedImages>): Promise<VisualRecognitionV3.ClassifiedImages|VisualRecognitionV3.Response<VisualRecognitionV3.ClassifiedImages>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
@@ -752,14 +752,10 @@ namespace VisualRecognitionV3 {
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
-  /** Parameters for the `classify` operation. */
-  export interface ClassifyParamsJson extends ClassifyParamsBase {
-    return_response: false
-  }
 
-  export interface ClassifyParamsRaw extends ClassifyParamsBase {
-    return_response: true
-  }
+  // export interface ClassifyParamsRaw extends ClassifyParamsBase {
+  //   return_response: true
+  // }
 
   /** Constants for the `classify` operation. */
   export namespace ClassifyConstants {
