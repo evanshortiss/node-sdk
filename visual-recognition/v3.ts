@@ -109,47 +109,49 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public classify(params?: VisualRecognitionV3.ClassifyParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.ClassifiedImages>): Promise<any> | void {
+  public classify(params: VisualRecognitionV3.ClassifyParamsRaw, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.ClassifiedImages>): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.ClassifiedImages>>
+  public classify(params: VisualRecognitionV3.ClassifyParamsBase, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.ClassifiedImages>): Promise<VisualRecognitionV3.ClassifiedImages|VisualRecognitionV3.Response<VisualRecognitionV3.ClassifiedImages>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.classify(params, (err, bod, res) => {
+    return new Promise((resolve, reject) => {
+      const formData = {
+        'images_file': {
+          data: _params.images_file,
+          filename: _params.images_filename,
+          contentType: _params.images_file_content_type
+        },
+        'url': _params.url,
+        'threshold': _params.threshold,
+        'owners': _params.owners,
+        'classifier_ids': _params.classifier_ids
+      };
+
+      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'classify');
+
+      const parameters = {
+        options: {
+          url: '/v3/classify',
+          method: 'POST',
+          formData
+        },
+        defaultOptions: extend(true, {}, this._options, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+            'Accept-Language': _params.accept_language
+          }, _params.headers),
+        }),
+      };
+
+      return this.createRequest(parameters, (err, bod, res) => {
+        if (_callback) {
+          _callback(err, bod, res)
+        } else {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
+        }
       });
-    }
-    const formData = {
-      'images_file': {
-        data: _params.images_file,
-        filename: _params.images_filename,
-        contentType: _params.images_file_content_type
-      },
-      'url': _params.url,
-      'threshold': _params.threshold,
-      'owners': _params.owners,
-      'classifier_ids': _params.classifier_ids
-    };
-
-    const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'classify');
-
-    const parameters = {
-      options: {
-        url: '/v3/classify',
-        method: 'POST',
-        formData
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-          'Accept-Language': _params.accept_language
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
+    })
   };
 
   /*************************
@@ -443,7 +445,7 @@ class VisualRecognitionV3 extends BaseService {
         });
       });
     }
- 
+
     const query = {
       'verbose': _params.verbose
     };
@@ -654,7 +656,7 @@ class VisualRecognitionV3 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'customer_id': _params.customer_id
     };
@@ -730,9 +732,7 @@ namespace VisualRecognitionV3 {
   /*************************
    * request interfaces
    ************************/
-
-  /** Parameters for the `classify` operation. */
-  export interface ClassifyParams {
+  export interface ClassifyParamsBase {
     /** An image file (.gif, .jpg, .png, .tif) or .zip file with images. Maximum image size is 10 MB. Include no more than 20 images and limit the .zip file to 100 MB. Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8 encoding if it encounters non-ASCII characters. You can also include an image with the **url** parameter. */
     images_file?: NodeJS.ReadableStream|FileObject|Buffer;
     /** The filename for images_file. */
@@ -751,6 +751,14 @@ namespace VisualRecognitionV3 {
     accept_language?: ClassifyConstants.AcceptLanguage | string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
+  }
+  /** Parameters for the `classify` operation. */
+  export interface ClassifyParamsJson extends ClassifyParamsBase {
+    return_response: false
+  }
+
+  export interface ClassifyParamsRaw extends ClassifyParamsBase {
+    return_response: true
   }
 
   /** Constants for the `classify` operation. */
